@@ -1,0 +1,5 @@
+ is an option that makes the search case-insensitive, so "root", "Root", and "ROOT" will all match.
+-A 3 is an option that tells grep to include 3 lines of context after each matching line. In other words, it will show the line with "root" as well as the three lines that come after it in the file.
+"root" is the search pattern that grep looks for.
+/etc/passwd is the path to the file that grep searches in. This file stores information about user accounts, including usernames, user IDs, and other details.
+
