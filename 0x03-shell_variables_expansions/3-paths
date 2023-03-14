@@ -1,3 +1,2 @@
 #!/bin/bash
 echo $PATH | grep -0 ":/" | wc -1
-
