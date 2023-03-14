@@ -1,2 +1,2 @@
 #!/bin/bash
-echo "$(set | grep '^LOCAL_VAR_')" | printenv | declare -F
+set
