@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # This script is displaying the content of the current directory
 
-for file in $(ls *)
+for file in ./*
 do
 	if [[ $file != ^\..* ]] #check if the file is not a hidden file
 	then
