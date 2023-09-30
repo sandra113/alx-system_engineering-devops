@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
-# This script displays a list of currently running processes.
+# This script displays the PID, along with the process name, of 
+# processes whose name contain the word bash.
 
-ps aux | grep "bash" | awk '{print $2, $11}'
+echo "$BASHPID"
+pgrep -1 "bash"
+sleep 2
+echo "$BASHPID"
