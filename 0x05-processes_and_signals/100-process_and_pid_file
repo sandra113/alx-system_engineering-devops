@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# This script creats a file and terminates itself when recieving a 
+# SIGQUIT or SIGTERM signal
 
 # Function to handle SIGTERM signal
 terminate() {
