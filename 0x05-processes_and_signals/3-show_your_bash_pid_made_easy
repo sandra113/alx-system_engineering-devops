@@ -2,7 +2,4 @@
 # This script displays the PID, along with the process name, of 
 # processes whose name contain the word bash.
 
-echo "$BASHPID"
 pgrep -1 "bash"
-sleep 2
-echo "$BASHPID"
