@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 # This script displays a list of currently running processes.
 
-ps aux | grep "bash" | awk '{print $2, $11}'
+ps aux | grep "bash"
