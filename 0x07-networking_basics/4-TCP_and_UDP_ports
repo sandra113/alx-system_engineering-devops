@@ -1,26 +1,30 @@
 #!/usr/bin/env bash
-# this script shows listening sockets, PID and name of program to which 
-#the socket belongs
 
-#import psutil
+# Checking if the 'netstat' and 'lsof' commands are available
+if ! command -v netstat &> /dev/null || ! command -v lsof &> /dev/null; then
+    echo "Please install 'netstat' and 'lsof' to use this script."
+    exit 1
+fi
 
-# Get a list of all listening network connections
-listening_connections = [conn for conn in psutil.net_connections(kind='inet') if conn.status == 'LISTEN']
+# Getting the listening ports and associated PIDs
+listening_ports=$(netstat -tuln | awk '/^tcp/ {print $4}')
 
-# Display header
-print(f"{'Port':<10} {'PID':<10} {'Program':<20}")
+# Displaying header
+printf "%-10s %-15s %-15s\n" "Port" "PID" "Program"
 
-# Loop through each listening connection
-for conn in listening_connections:
-    port = conn.laddr.port
-    pid = conn.pid
-
-    # Try to get the process name
-    try:
-        process = psutil.Process(pid)
-        program = process.name()
-    except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
-        program = "N/A"
-
-    print(f"{port:<10} {pid:<10} {program:<20}")
+# Looping through each listening port
+for port in $listening_ports; do
+    # Extract the port number
+    port_number=$(echo "$port" | awk -F ':' '{print $2}')
+    
+    # Find the PID and program name associated with the port using 'lsof'
+    pid_program=$(lsof -i :$port_number -sTCP:LISTEN -t -n)
+    
+    # If a program is associated with the port, display the information
+    if [ -n "$pid_program" ]; then
+        pid=$(echo "$pid_program" | awk '{print $1}')
+        program=$(ps -p $pid -o comm=)
+        printf "%-10s %-15s %-15s\n" "$port_number" "$pid" "$program"
+    fi
+done
 
