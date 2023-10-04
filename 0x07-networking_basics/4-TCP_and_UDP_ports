@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# this script shows listening sockets, PID and name of program to which 
+#the socket belongs
+
+#import psutil
+
+# Get a list of all listening network connections
+listening_connections = [conn for conn in psutil.net_connections(kind='inet') if conn.status == 'LISTEN']
+
+# Display header
+print(f"{'Port':<10} {'PID':<10} {'Program':<20}")
+
+# Loop through each listening connection
+for conn in listening_connections:
+    port = conn.laddr.port
+    pid = conn.pid
+
+    # Try to get the process name
+    try:
+        process = psutil.Process(pid)
+        program = process.name()
+    except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+        program = "N/A"
+
+    print(f"{port:<10} {pid:<10} {program:<20}")
+
