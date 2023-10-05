@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# Create a custom DNS resolver configuration file
+
+sudo bash -c 'echo "nameserver 127.0.0.2" > /etc/resolv.conf.custom'
+
+# Append Google DNS for facebook.com to the custom configuration
+echo "nameserver 8.8.8.8" | sudo tee -a /etc/resolv.conf.custom > /dev/null
+
+# Create a symbolic link to the custom configuration
+sudo ln -sf /etc/resolv.conf.custom /etc/resolv.conf
+
+# Display the updated DNS configuration
+cat /etc/resolv.conf
+
+echo "DNS configuration updated."
+
+sudo systemctl restart networking
