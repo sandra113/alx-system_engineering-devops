@@ -1,6 +1,7 @@
-exec { 'kill_killmenow_process':
-  command     => 'pkill -f killmenow',
-  refreshonly => true,
-  notify      => Exec['start_killmenow_process'],
+#kill process killmenow
+
+exec { 'pkill':
+  command     => 'pkill killmenow',
+  provider    => 'shell',
 }
 

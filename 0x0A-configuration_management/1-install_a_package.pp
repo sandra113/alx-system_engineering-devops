@@ -1,4 +1,6 @@
+#!/usr/bin/pup
 #installing flask from pip3
-exec { 'install_upgrade_flask':
-  command => 'pip3 install --upgrade Flask==2.1.0',
+package { 'flask':
+  ensure   => '2.1'0',
+  provider => 'pip3'
 }
