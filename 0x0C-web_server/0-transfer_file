@@ -16,10 +16,7 @@ SSH_KEY_PATH=$4
 SCP_COMMAND="scp -o StrictHostKeyChecking=no -i $SSH_KEY_PATH $FILE_PATH $USERNAME@$SERVER_IP:~/"
 
 # Execute the scp command
-$SCP_COMMAND
-
-# Check the exit status of the scp command
-if [ $? -eq 0 ]; then
+if $SCP_COMMAND; then
     echo "File transferred successfully."
 else
     echo "Error transferring file. Please check your parameters and try again."
