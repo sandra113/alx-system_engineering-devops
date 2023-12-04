@@ -1,6 +1,23 @@
-# HTTP header 
+#!/usr/bin/env bash
+# Configuring web-02 to be identical to web-01
 
-sudo sed -i "/server_name _/a add_header X-Served-By $HOSTNAME;" /etc/nginx/sites-enabled/default
+# Package update
+sudo apt-get update
+sudo apt-get install -y nginx
+
+# index page
+echo "Hello world!" | sudo tee /var/www/html/index.html
+
+# Redirection
+new_line="server_name _;\n\trewrite ^\/redirect_me https:\/\/github.com\/sandra113 permanent;"
+
+sudo sed -i "s/server_name _;/$new_line" /etc/nginx/sites-enabled/default
+
+# custom error page
+echo "Ceci n'est pas une page" | sudo tee /var/www/html/404.html
+
+#HTTP response header
+sudo sed -i "/server_name _;/a add_header X-Served-By $HOSTNAME;" /etc/nginx/sites-enabled/default
 
 # test for syntax errors
 sudo nginx -t
