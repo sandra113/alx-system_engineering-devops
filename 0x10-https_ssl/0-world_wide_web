@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+#Configure your domain zone so that the subdomain www points to your load-balancer IP (lb-01). 
 
 domain_info () {
 	line=$(dig "$2","$1" | grep -AI 'ANSWER SECTION:' | tr '\t' '\n' | tail -2 | tr '\n' ' ')
