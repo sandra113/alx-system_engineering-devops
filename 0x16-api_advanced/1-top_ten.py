@@ -5,6 +5,7 @@ and prints the titles of the first 10 hot posts listed for a given subreddit
 """
 import requests
 
+
 def top_ten(subreddit):
     """
     Reddit API endpoint for getting hot posts in a subreddit
@@ -16,7 +17,6 @@ def top_ten(subreddit):
     if response.status_code == 200:
         data = response.json()
         posts = data['data']['children']
-
 
         for posts in posts:
             title = post['data']['title']
